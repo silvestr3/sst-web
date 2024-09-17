@@ -12,7 +12,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.className} antialiased`}>{children}</body>
+      <body
+        className={`${manrope.className} antialiased bg-background text-foreground`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

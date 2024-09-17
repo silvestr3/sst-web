@@ -71,20 +71,19 @@ export function Sidebar() {
           type="button"
           variant={"ghost"}
           size={"icon"}
-          className="hover:bg-transparent hover:text-accent"
           onClick={toggleCollapsed}
         >
           <Menu />
         </Button>
       </div>
 
-      <nav className="p-4">
+      <nav className="px-1">
         <Accordion type="multiple">
           <AccordionItem value="registrations">
             <AccordionTrigger
               className={cn([
-                "text-sm text-muted/60 font-medium flex justify-start",
-                isCollapsed && "justify-center",
+                "text-sm font-medium flex justify-start ",
+                isCollapsed && "justify-center px-3",
               ])}
             >
               <SquaresFour className="h-5 w-5 mr-2" />

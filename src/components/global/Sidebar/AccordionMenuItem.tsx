@@ -21,24 +21,29 @@ export const AccordionMenuItem = ({
   icon,
 }: AccordionMenuItemProps) => {
   return (
-    <li>
+    <li
+      className={cn(
+        "w-full hover:bg-primary/10 p-1 rounded-sm flex items-center",
+        isCollapsed && "justify-center"
+      )}
+    >
       <TooltipProvider delayDuration={0}>
         <Tooltip>
-          <TooltipTrigger className="w-full hover:bg-accent/10 p-1 rounded-sm">
+          <TooltipTrigger asChild>
             <a
               className={cn([
-                "flex items-center justify-start text-sm transition-colors duration-150 ease-in-out",
+                "flex items-center py-1 rounded-lg w-full justify-start text-sm",
                 isCollapsed && "justify-center",
               ])}
               href={href}
             >
               {icon}
-              {!isCollapsed && <span className="text-muted/60">{label}</span>}
+              {!isCollapsed && <span>{label}</span>}
             </a>
           </TooltipTrigger>
           {isCollapsed && (
             <TooltipContent
-              className="ml-2 bg-card-foreground border border-muted-foreground text-foreground p-2 rounded-md"
+              className="ml-2 bg-card text-foreground p-2 rounded-md"
               side="right"
             >
               {label}
