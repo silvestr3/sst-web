@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/styles/globals.css";
 import { Manrope } from "next/font/google";
 
 const manrope = Manrope({
