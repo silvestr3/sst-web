@@ -20,10 +20,15 @@ const AccordionItem = React.forwardRef<
 ));
 AccordionItem.displayName = "AccordionItem";
 
+interface AccordionTriggerCustomProps
+  extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
+  showCaret: boolean;
+}
+
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  AccordionTriggerCustomProps
+>(({ className, children, showCaret, ...props }, ref) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
       ref={ref}
@@ -34,7 +39,9 @@ const AccordionTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      <CaretDown className="h-4 w-4 ml-auto shrink-0 transition-transform duration-200" />
+      {showCaret && (
+        <CaretDown className="h-4 w-4 ml-auto shrink-0 transition-transform duration-200" />
+      )}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));

@@ -30,13 +30,7 @@ export const MenuItem = ({ isCollapsed, label, href, icon }: MenuItemProps) => {
     >
       <TooltipProvider delayDuration={0}>
         <Tooltip>
-          <TooltipTrigger
-            className={cn([
-              "hover:opacity-100",
-              !(basepath === href.slice(1)) && "opacity-70",
-            ])}
-            asChild
-          >
+          <TooltipTrigger className={cn(["hover:opacity-100"])} asChild>
             <Link
               className={cn([
                 "flex items-center py-1 rounded-lg w-full h-full justify-start text-sm",

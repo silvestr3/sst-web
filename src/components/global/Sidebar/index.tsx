@@ -94,6 +94,7 @@ export function Sidebar() {
         <Accordion type="multiple">
           <AccordionItem value="registrations">
             <AccordionTrigger
+              showCaret={!isCollapsed}
               className={cn([
                 "text-sm font-medium flex justify-start ",
                 isCollapsed && "justify-center px-3",
