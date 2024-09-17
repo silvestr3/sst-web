@@ -65,8 +65,8 @@ export function Sidebar() {
         isCollapsed ? "w-16" : "w-64",
       ])}
     >
-      <div className="flex items-center justify-between px-3">
-        {!isCollapsed && <span className="text-lg">Menu</span>}
+      <div className="flex items-center justify-between px-1">
+        {!isCollapsed && <span className="text-base">Menu</span>}
         <Button
           type="button"
           variant={"ghost"}

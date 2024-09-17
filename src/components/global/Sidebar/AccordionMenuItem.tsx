@@ -29,10 +29,10 @@ export const AccordionMenuItem = ({
     >
       <TooltipProvider delayDuration={0}>
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger className="opacity-70 hover:opacity-100" asChild>
             <a
               className={cn([
-                "flex items-center py-1 rounded-lg w-full justify-start text-sm",
+                "flex items-center py-1 rounded-lg w-full h-full justify-start text-sm",
                 isCollapsed && "justify-center",
               ])}
               href={href}
