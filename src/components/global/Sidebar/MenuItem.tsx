@@ -5,32 +5,39 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactElement } from "react";
 
-interface AccordionMenuItemProps {
+interface MenuItemProps {
   isCollapsed: boolean;
   label: string;
   href: string;
   icon: ReactElement;
 }
 
-export const AccordionMenuItem = ({
-  isCollapsed,
-  label,
-  href,
-  icon,
-}: AccordionMenuItemProps) => {
+export const MenuItem = ({ isCollapsed, label, href, icon }: MenuItemProps) => {
+  const pathname = usePathname();
+  const basepath = pathname.split("/")[1];
+
   return (
     <li
       className={cn(
-        "w-full hover:bg-primary/10 p-1 rounded-sm flex items-center",
-        isCollapsed && "justify-center"
+        "w-full hover:bg-accent py-1 rounded-sm flex items-center",
+        isCollapsed && "justify-center",
+        basepath === href.slice(1) && "bg-accent hover:0"
       )}
     >
       <TooltipProvider delayDuration={0}>
         <Tooltip>
-          <TooltipTrigger className="opacity-70 hover:opacity-100" asChild>
-            <a
+          <TooltipTrigger
+            className={cn([
+              "hover:opacity-100",
+              !(basepath === href.slice(1)) && "opacity-70",
+            ])}
+            asChild
+          >
+            <Link
               className={cn([
                 "flex items-center py-1 rounded-lg w-full h-full justify-start text-sm",
                 isCollapsed && "justify-center",
@@ -39,7 +46,7 @@ export const AccordionMenuItem = ({
             >
               {icon}
               {!isCollapsed && <span>{label}</span>}
-            </a>
+            </Link>
           </TooltipTrigger>
           {isCollapsed && (
             <TooltipContent
