@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
 
 interface GroupListItemProps {
@@ -22,7 +23,15 @@ export function GroupListItem({ group }: GroupListItemProps) {
   return (
     <TableRow>
       <TableCell>{group.name}</TableCell>
-      <TableCell>{group.isActive ? "Ativo" : "Inativo"}</TableCell>
+      <TableCell className="flex items-center gap-2">
+        <span
+          className={cn([
+            "w-2 h-2 rounded-full",
+            group.isActive ? "bg-emerald-500" : "bg-rose-500",
+          ])}
+        />
+        <span>{group.isActive ? "Ativo" : "Inativo"}</span>
+      </TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

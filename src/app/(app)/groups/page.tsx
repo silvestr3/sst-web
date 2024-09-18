@@ -42,7 +42,7 @@ const groups = [
   {
     id: "5",
     name: "GERAÇÃO CULTIVAR",
-    isActive: true,
+    isActive: false,
   },
 ];
 
@@ -100,7 +100,7 @@ export default function GroupsPage() {
         <TableHeader>
           <TableRow>
             <TableHead className="mr-auto">Nome do grupo</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead className="w-56">Status</TableHead>
             <TableHead className="w-16 text-right"></TableHead>
           </TableRow>
         </TableHeader>
