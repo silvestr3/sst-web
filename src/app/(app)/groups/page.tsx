@@ -5,6 +5,7 @@ import {
   TableBody,
   TableHead,
   TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { Component, FileDown, Plus, Search } from "lucide-react";
 import { GroupListItem } from "./components/GroupListItem";
@@ -97,9 +98,11 @@ export default function GroupsPage() {
 
       <Table className="mt-8">
         <TableHeader>
-          <TableHead className="mr-auto">Nome do grupo</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="w-16 text-right"></TableHead>
+          <TableRow>
+            <TableHead className="mr-auto">Nome do grupo</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="w-16 text-right"></TableHead>
+          </TableRow>
         </TableHeader>
         <TableBody>
           {groups.map((group) => (
