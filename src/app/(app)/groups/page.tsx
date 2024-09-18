@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { NewGroupSheet } from "./components/NewGroupSheet";
 
 const groups = [
   {
@@ -52,13 +53,15 @@ export default function GroupsPage() {
         <h2>Grupos</h2>
 
         <div className="flex items-center gap-1 ml-auto">
-          <Button
-            className="flex items-center gap-2 text-secondary-foreground"
-            variant={"secondary"}
-          >
-            <Plus size={18} />
-            Novo
-          </Button>
+          <NewGroupSheet>
+            <Button
+              className="flex items-center gap-2 text-secondary-foreground"
+              variant={"secondary"}
+            >
+              <Plus size={18} />
+              Novo
+            </Button>
+          </NewGroupSheet>
           <Button
             className="flex items-center gap-2 text-secondary-foreground"
             variant={"outline"}
