@@ -28,7 +28,7 @@ export const MenuItem = ({ isCollapsed, label, href, icon }: MenuItemProps) => {
         basepath === href.slice(1) && "bg-accent hover:0"
       )}
     >
-      <TooltipProvider delayDuration={0}>
+      <TooltipProvider disableHoverableContent delayDuration={0}>
         <Tooltip>
           <TooltipTrigger className={cn(["hover:opacity-100"])} asChild>
             <Link
