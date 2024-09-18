@@ -3,34 +3,36 @@
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "../../ui/button";
-import {
-  Buildings,
-  Cube,
-  House,
-  IdentificationBadge,
-  SquaresFour,
-  Suitcase,
-  User,
-} from "phosphor-react";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Building, Menu } from "lucide-react";
+import {
+  Briefcase,
+  Building,
+  Building2,
+  Component,
+  Grid2x2Plus,
+  House,
+  IdCard,
+  Menu,
+  User,
+} from "lucide-react";
 import { MenuItem } from "./MenuItem";
 
 const registrationsMenuItems = [
   {
     label: "Grupo",
     href: "/groups",
-    icon: Cube,
+    icon: Component,
   },
   {
     label: "Empresa",
     href: "/employers",
-    icon: Buildings,
+    icon: Building2,
   },
   {
     label: "Unidade",
@@ -40,12 +42,12 @@ const registrationsMenuItems = [
   {
     label: "Setor",
     href: "/departments",
-    icon: IdentificationBadge,
+    icon: IdCard,
   },
   {
     label: "Função",
     href: "/positions",
-    icon: Suitcase,
+    icon: Briefcase,
   },
   {
     label: "Funcionários",
@@ -88,7 +90,12 @@ export function Sidebar() {
           href="/"
           isCollapsed={isCollapsed}
           label="Página inicial"
-          icon={<House className={cn(["h-5 w-5", !isCollapsed && "mr-3"])} />}
+          icon={
+            <House
+              opacity={0.8}
+              className={cn(["h-5 w-5", !isCollapsed && "mr-3"])}
+            />
+          }
         />
 
         <Accordion type="multiple">
@@ -100,7 +107,7 @@ export function Sidebar() {
                 isCollapsed && "justify-center px-3",
               ])}
             >
-              <SquaresFour className="h-5 w-5 mr-3" />
+              <Grid2x2Plus opacity={0.8} className="h-5 w-5 mr-3" />
               {!isCollapsed && <span>Cadastros</span>}
             </AccordionTrigger>
 
@@ -114,6 +121,7 @@ export function Sidebar() {
                     isCollapsed={isCollapsed}
                     icon={
                       <item.icon
+                        opacity={0.8}
                         className={cn(["h-5 w-5", !isCollapsed && "mr-3"])}
                       />
                     }
