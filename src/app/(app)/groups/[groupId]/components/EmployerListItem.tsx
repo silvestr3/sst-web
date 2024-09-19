@@ -11,28 +11,28 @@ import { cn } from "@/lib/utils";
 import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 
-interface GroupListItemProps {
-  group: {
-    id: string;
-    name: string;
-    isActive: boolean;
-  };
-}
+const employer = {
+  id: "123",
+  nomeFantasia: "Empresa teste",
+  isActive: true,
+  cpf: 12312312312,
+};
 
-export function GroupListItem({ group }: GroupListItemProps) {
+export function EmployerListItem() {
   return (
     <TableRow>
-      <TableCell>{group.name}</TableCell>
+      <TableCell>{employer.nomeFantasia}</TableCell>
+      <TableCell>123.123.123-12</TableCell>
       <TableCell className="py-6 flex items-center gap-2">
         <span
           className={cn([
             "w-2 h-2 rounded-full",
-            group.isActive ? "bg-emerald-500" : "bg-rose-500",
+            employer.isActive ? "bg-emerald-500" : "bg-rose-500",
           ])}
         />
-        <span>{group.isActive ? "Ativo" : "Inativo"}</span>
+        <span>{employer.isActive ? "Ativa" : "Inativa"}</span>
       </TableCell>
-      <TableCell>
+      <TableCell className="p-0">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <EllipsisVertical className="cursor-pointer" opacity={0.7} />
@@ -40,10 +40,10 @@ export function GroupListItem({ group }: GroupListItemProps) {
 
           <DropdownMenuContent className="w-[220px]" align="end">
             <DropdownMenuLabel className="truncate">
-              {group.name}
+              {employer.nomeFantasia}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <Link href={`/groups/${group.id}`}>
+            <Link href={`/employers/${employer.id}`}>
               <DropdownMenuItem className="flex items-center">
                 <Eye opacity={0.7} className="mr-4" />
                 Visualizar
