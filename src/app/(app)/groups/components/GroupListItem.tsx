@@ -23,7 +23,7 @@ export function GroupListItem({ group }: GroupListItemProps) {
   return (
     <TableRow>
       <TableCell>{group.name}</TableCell>
-      <TableCell className="flex items-center gap-2">
+      <TableCell className="py-6 flex items-center gap-2">
         <span
           className={cn([
             "w-2 h-2 rounded-full",
@@ -40,8 +40,10 @@ export function GroupListItem({ group }: GroupListItemProps) {
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>{group.name}</DropdownMenuLabel>
+          <DropdownMenuContent className="w-[150px]" align="end">
+            <DropdownMenuLabel className="truncate">
+              {group.name}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="flex items-center">
               <Eye opacity={0.7} className="mr-4" />
