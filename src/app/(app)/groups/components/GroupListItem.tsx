@@ -40,7 +40,7 @@ export function GroupListItem({ group }: GroupListItemProps) {
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="w-[150px]" align="end">
+          <DropdownMenuContent className="w-[220px]" align="end">
             <DropdownMenuLabel className="truncate">
               {group.name}
             </DropdownMenuLabel>

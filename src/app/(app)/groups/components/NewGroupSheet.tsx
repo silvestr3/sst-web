@@ -75,7 +75,9 @@ export function NewGroupSheet({ children }: NewGroupSheetProps) {
               Salvar
             </Button>
             <SheetClose asChild>
-              <Button variant={"outline"}>Cancelar</Button>
+              <Button onClick={() => reset()} variant={"outline"}>
+                Cancelar
+              </Button>
             </SheetClose>
           </div>
         </form>

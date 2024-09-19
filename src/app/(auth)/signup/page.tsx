@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function SignupPage() {
   return (
     <form className="flex flex-col gap-2 items-center justify-center">
-      <h1 className="font-bold text-2xl mb-6">Entre em sua conta</h1>
+      <h1 className="font-bold text-2xl mb-6">Cadastrar nova conta</h1>
 
       <div className="flex flex-col gap-2">
         <Label>Seu nome</Label>
