@@ -17,36 +17,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { NewGroupSheet } from "./components/NewGroupSheet";
+import { fetchGroups } from "@/services/fetch-groups";
 
-const groups = [
-  {
-    id: "1",
-    name: "CONSTRUTORA ENERGIA",
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "CONSTRUTORA PERFIL LTDA",
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "CONSTRUTORA SÃO CRISTÓVÃO",
-    isActive: true,
-  },
-  {
-    id: "4",
-    name: "FAZER CONSULTORIA E TREINAMENTOS",
-    isActive: true,
-  },
-  {
-    id: "5",
-    name: "GERAÇÃO CULTIVAR",
-    isActive: false,
-  },
-];
+export default async function GroupsPage() {
+  const { groups } = await fetchGroups();
 
-export default function GroupsPage() {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-start text-3xl text-accent-foreground">
