@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/table";
 import { Search } from "lucide-react";
 import { EmployerListItem } from "./components/EmployerListItem";
+import { fetchEmployersByGroup } from "@/services/fetch-employers-by-group";
+import { Http2ServerRequest } from "http2";
 
 interface GroupInstancePageProps {
   params: {
@@ -31,16 +33,11 @@ interface GroupInstancePageProps {
   };
 }
 
-const group = {
-  id: "4",
-  name: "FAZER CONSULTORIA E TREINAMENTOS",
-  description: "FAZER consultoria",
-  isActive: true,
-};
-
-export default function GroupInstancePage({ params }: GroupInstancePageProps) {
+export default async function GroupInstancePage({
+  params,
+}: GroupInstancePageProps) {
   const { groupId } = params;
-  console.log(groupId);
+  const { employers, group } = await fetchEmployersByGroup(groupId);
 
   return (
     <div className="flex flex-col gap-2">
@@ -58,7 +55,7 @@ export default function GroupInstancePage({ params }: GroupInstancePageProps) {
 
       <Separator />
 
-      <div className="flex flex-col justify-start">
+      <div className="flex flex-col gap-1 justify-start">
         <h2 className="text-3xl text-accent-foreground">{group.name}</h2>
         <span className="text-secondary-foreground text-sm">
           {group.description}
@@ -85,21 +82,27 @@ export default function GroupInstancePage({ params }: GroupInstancePageProps) {
         </Button>
       </div>
 
-      <Table className="mt-8">
-        <TableHeader>
-          <TableRow>
-            <TableHead className="mr-auto">Nome da empresa</TableHead>
-            <TableHead className="w-56">CPF/CNPJ</TableHead>
-            <TableHead className="w-48">Status</TableHead>
-            <TableHead className="w-16 text-right"></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Array.from({ length: 8 }).map((_, item) => (
-            <EmployerListItem key={item} />
-          ))}
-        </TableBody>
-      </Table>
+      {employers.length > 0 ? (
+        <Table className="mt-8">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="mr-auto">Nome da empresa</TableHead>
+              <TableHead className="w-56">CPF/CNPJ</TableHead>
+              <TableHead className="w-48">Status</TableHead>
+              <TableHead className="w-16 text-right"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {employers.map((employer) => (
+              <EmployerListItem key={employer.id} employer={employer} />
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <h2 className="text-center mt-10 text-lg">
+          Não foram encontradas empresas cadastradas neste grupo
+        </h2>
+      )}
     </div>
   );
 }

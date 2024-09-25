@@ -1,3 +1,4 @@
+import { Employer } from "@/@types/Employer";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +12,11 @@ import { cn } from "@/lib/utils";
 import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 
-const employer = {
-  id: "123",
-  nomeFantasia: "Empresa teste",
-  isActive: true,
-  cpf: 12312312312,
-};
+interface EmployerListItemProps {
+  employer: Employer;
+}
 
-export function EmployerListItem() {
+export function EmployerListItem({ employer }: EmployerListItemProps) {
   return (
     <TableRow>
       <TableCell>{employer.nomeFantasia}</TableCell>

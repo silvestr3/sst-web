@@ -6,7 +6,12 @@ export interface FetchGroupsResponse {
 }
 
 export async function fetchGroups(): Promise<FetchGroupsResponse> {
-  const response = await api("/groups");
+  const response = await api("/groups", {
+    next: {
+      revalidate: 60 * 60, // 1 hour
+      tags: ["fetch-groups"],
+    },
+  });
   const groups = await response.json();
 
   return groups;
