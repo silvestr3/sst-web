@@ -10,6 +10,7 @@ export interface FetchEmployersByGroupResponse {
 export async function fetchEmployersByGroup(
   groupId: string
 ): Promise<FetchEmployersByGroupResponse> {
+  "use server";
   const response = await api(`/groups/${groupId}/employers`, {
     next: {
       revalidate: 60 * 60, // 1 hour

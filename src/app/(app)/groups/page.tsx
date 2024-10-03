@@ -71,20 +71,26 @@ export default async function GroupsPage() {
         </Button>
       </div>
 
-      <Table className="mt-8">
-        <TableHeader>
-          <TableRow>
-            <TableHead className="mr-auto">Nome do grupo</TableHead>
-            <TableHead className="w-56">Status</TableHead>
-            <TableHead className="w-16 text-right"></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {groups.map((group) => (
-            <GroupListItem key={group.id} group={group} />
-          ))}
-        </TableBody>
-      </Table>
+      {groups.length > 0 ? (
+        <Table className="mt-8">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="mr-auto">Nome do grupo</TableHead>
+              <TableHead className="w-56">Status</TableHead>
+              <TableHead className="w-16 text-right"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {groups.map((group) => (
+              <GroupListItem key={group.id} group={group} />
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <h2 className="text-center mt-10 text-lg">
+          Você ainda não cadastrou nenhum grupo
+        </h2>
+      )}
     </div>
   );
 }
