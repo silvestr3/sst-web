@@ -7,6 +7,7 @@ import { revalidateTag } from "next/cache";
 export interface CreateGroupParams {
   name: string;
   description: string;
+  isActive: boolean;
 }
 
 export interface CreateGroupSuccessResponse {
@@ -18,6 +19,7 @@ export type CreateGroupReturn = CreateGroupSuccessResponse & ErrorResponse;
 export async function createGroup({
   name,
   description,
+  isActive,
 }: CreateGroupParams): Promise<CreateGroupReturn> {
   const response = await api("/groups", {
     method: "POST",
@@ -27,6 +29,7 @@ export async function createGroup({
     body: JSON.stringify({
       name,
       description,
+      isActive,
     }),
   });
 

@@ -15,33 +15,45 @@ import { Textarea } from "@/components/ui/textarea";
 import { Save } from "lucide-react";
 import { ReactNode } from "react";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createGroup } from "@/services/create-group";
 import { toast } from "sonner";
+import { Switch } from "@/components/ui/switch";
 
 const newGroupFormSchema = z.object({
   name: z.string().min(1, "Nome do grupo é obrigatório"),
   description: z.string().min(1, "Forneça uma descrição ao grupo"),
+  isActive: z.boolean(),
 });
 
 type NewGroupFormType = z.infer<typeof newGroupFormSchema>;
 
-interface NewGroupSheetProps {
+interface GroupFormSheetProps {
   children: ReactNode;
+  name?: string;
+  description?: string;
+  isActive?: boolean;
 }
 
-export function NewGroupSheet({ children }: NewGroupSheetProps) {
+export function GroupFormSheet({
+  children,
+  name,
+  description,
+  isActive,
+}: GroupFormSheetProps) {
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<NewGroupFormType>({
     resolver: zodResolver(newGroupFormSchema),
     defaultValues: {
-      name: "",
-      description: "",
+      name: name ?? "",
+      description: description ?? "",
+      isActive: isActive ?? true,
     },
   });
 
@@ -49,6 +61,7 @@ export function NewGroupSheet({ children }: NewGroupSheetProps) {
     const result = await createGroup({
       name: data.name,
       description: data.description,
+      isActive: data.isActive,
     });
 
     if (result.statusCode) {
@@ -81,7 +94,7 @@ export function NewGroupSheet({ children }: NewGroupSheetProps) {
             <Label htmlFor="name">Nome</Label>
             <Input {...register("name")} type="text" id="name" />
             {errors.name && (
-              <span className="text-sm text-rose-600 font-semibold">
+              <span className="text-sm text-destructive font-semibold">
                 {errors.name.message}
               </span>
             )}
@@ -91,10 +104,27 @@ export function NewGroupSheet({ children }: NewGroupSheetProps) {
             <Label htmlFor="description">Descrição</Label>
             <Textarea {...register("description")} id="description" />
             {errors.description && (
-              <span className="text-sm text-rose-600 font-semibold">
+              <span className="text-sm text-destructive font-semibold">
                 {errors.description.message}
               </span>
             )}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Label htmlFor="isActive">Ativo</Label>
+            <Controller
+              control={control}
+              name="isActive"
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <Switch
+                    checked={value}
+                    onCheckedChange={onChange}
+                    id="isActive"
+                  />
+                );
+              }}
+            />
           </div>
 
           <div className="flex items-center gap-1 justify-end">

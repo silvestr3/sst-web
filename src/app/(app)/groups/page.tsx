@@ -16,8 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { NewGroupSheet } from "./components/NewGroupSheet";
 import { fetchGroups } from "@/services/fetch-groups";
+import { GroupFormSheet } from "./components/NewGroupSheet";
 
 export default async function GroupsPage() {
   const { groups } = await fetchGroups();
@@ -29,7 +29,7 @@ export default async function GroupsPage() {
         <h2>Grupos</h2>
 
         <div className="flex items-center gap-1 ml-auto">
-          <NewGroupSheet>
+          <GroupFormSheet>
             <Button
               className="flex items-center gap-2 text-secondary-foreground"
               variant={"secondary"}
@@ -37,7 +37,7 @@ export default async function GroupsPage() {
               <Plus size={18} />
               Novo
             </Button>
-          </NewGroupSheet>
+          </GroupFormSheet>
           <Button
             className="flex items-center gap-2 text-secondary-foreground"
             variant={"outline"}
