@@ -17,10 +17,12 @@ import { ReactNode } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createGroup } from "@/services/create-group";
+import { toast } from "sonner";
 
 const newGroupFormSchema = z.object({
-  name: z.string(),
-  description: z.string(),
+  name: z.string().min(1, "Nome do grupo é obrigatório"),
+  description: z.string().min(1, "Forneça uma descrição ao grupo"),
 });
 
 type NewGroupFormType = z.infer<typeof newGroupFormSchema>;
@@ -30,7 +32,12 @@ interface NewGroupSheetProps {
 }
 
 export function NewGroupSheet({ children }: NewGroupSheetProps) {
-  const { register, handleSubmit, reset } = useForm<NewGroupFormType>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<NewGroupFormType>({
     resolver: zodResolver(newGroupFormSchema),
     defaultValues: {
       name: "",
@@ -38,8 +45,19 @@ export function NewGroupSheet({ children }: NewGroupSheetProps) {
     },
   });
 
-  function handleCreateNewGroupSubmit(data: NewGroupFormType) {
-    console.log(data);
+  async function handleCreateNewGroupSubmit(data: NewGroupFormType) {
+    const result = await createGroup({
+      name: data.name,
+      description: data.description,
+    });
+
+    if (result.statusCode) {
+      toast.error(result.message);
+      return;
+    }
+
+    const groupName = result.group.name;
+    toast.success(`Grupo "${groupName}" criado com sucesso!`);
 
     reset();
   }
@@ -62,11 +80,21 @@ export function NewGroupSheet({ children }: NewGroupSheetProps) {
           <div>
             <Label htmlFor="name">Nome</Label>
             <Input {...register("name")} type="text" id="name" />
+            {errors.name && (
+              <span className="text-sm text-rose-600 font-semibold">
+                {errors.name.message}
+              </span>
+            )}
           </div>
 
           <div>
             <Label htmlFor="description">Descrição</Label>
             <Textarea {...register("description")} id="description" />
+            {errors.description && (
+              <span className="text-sm text-rose-600 font-semibold">
+                {errors.description.message}
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-1 justify-end">

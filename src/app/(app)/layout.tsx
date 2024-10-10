@@ -28,7 +28,9 @@ export default async function AppLayout({ children }: LayoutProps) {
       />
       <div className="flex flex-1">
         <Sidebar />
-        <main className="flex-1 p-8">{children}</main>
+        <main className="flex-1 p-8 max-h-[calc(100vh-64px)] overflow-y-auto">
+          {children}
+        </main>
       </div>
     </div>
   );
