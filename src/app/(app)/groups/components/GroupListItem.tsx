@@ -1,3 +1,4 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +11,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { DeleteGroupDialog } from "./DeleteGroupDialog";
 
 interface GroupListItemProps {
   group: {
@@ -54,10 +56,15 @@ export function GroupListItem({ group }: GroupListItemProps) {
               Editar
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="flex items-center text-destructive">
-              <Trash2 opacity={0.7} className="mr-4" />
-              Deletar
-            </DropdownMenuItem>
+            <DeleteGroupDialog groupName={group.name} groupId={group.id}>
+              <DropdownMenuItem
+                onSelect={(e) => e.preventDefault()}
+                className="flex items-center text-destructive"
+              >
+                <Trash2 opacity={0.7} className="mr-4" />
+                Deletar
+              </DropdownMenuItem>
+            </DeleteGroupDialog>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>
