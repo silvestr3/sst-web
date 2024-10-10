@@ -12,11 +12,13 @@ import { cn } from "@/lib/utils";
 import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { DeleteGroupDialog } from "./DeleteGroupDialog";
+import { GroupFormSheet } from "./GroupFormSheet";
 
 interface GroupListItemProps {
   group: {
     id: string;
     name: string;
+    description: string;
     isActive: boolean;
   };
 }
@@ -51,10 +53,20 @@ export function GroupListItem({ group }: GroupListItemProps) {
                 Visualizar
               </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem className="flex items-center">
-              <Pencil opacity={0.7} className="mr-4" />
-              Editar
-            </DropdownMenuItem>
+            <GroupFormSheet
+              name={group.name}
+              description={group.description}
+              groupId={group.id}
+              isActive={group.isActive}
+            >
+              <DropdownMenuItem
+                onSelect={(e) => e.preventDefault()}
+                className="flex items-center"
+              >
+                <Pencil opacity={0.7} className="mr-4" />
+                Editar
+              </DropdownMenuItem>
+            </GroupFormSheet>
             <DropdownMenuSeparator />
             <DeleteGroupDialog groupName={group.name} groupId={group.id}>
               <DropdownMenuItem

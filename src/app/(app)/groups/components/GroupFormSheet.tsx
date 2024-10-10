@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createGroup } from "@/services/create-group";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
+import { editGroup } from "@/services/edit-group";
 
 const newGroupFormSchema = z.object({
   name: z.string().min(1, "Nome do grupo é obrigatório"),
@@ -31,6 +32,7 @@ type NewGroupFormType = z.infer<typeof newGroupFormSchema>;
 
 interface GroupFormSheetProps {
   children: ReactNode;
+  groupId?: string;
   name?: string;
   description?: string;
   isActive?: boolean;
@@ -38,6 +40,7 @@ interface GroupFormSheetProps {
 
 export function GroupFormSheet({
   children,
+  groupId,
   name,
   description,
   isActive,
@@ -57,22 +60,38 @@ export function GroupFormSheet({
     },
   });
 
-  async function handleCreateNewGroupSubmit(data: NewGroupFormType) {
-    const result = await createGroup({
-      name: data.name,
-      description: data.description,
-      isActive: data.isActive,
-    });
+  async function handleCreateOrEditGroupSubmit(data: NewGroupFormType) {
+    if (groupId) {
+      const result = await editGroup({
+        groupId,
+        name: data.name,
+        description: data.description,
+        isActive: data.isActive,
+      });
 
-    if (result.statusCode) {
-      toast.error(result.message);
-      return;
+      if (result.statusCode) {
+        toast.error(result.message);
+        return;
+      }
+
+      toast.success(`Grupo "${data.name}" editado com sucesso!`);
+    } else {
+      const result = await createGroup({
+        name: data.name,
+        description: data.description,
+        isActive: data.isActive,
+      });
+
+      if (result.statusCode) {
+        toast.error(result.message);
+        return;
+      }
+
+      const groupName = result.group.name;
+      toast.success(`Grupo "${groupName}" criado com sucesso!`);
+
+      reset();
     }
-
-    const groupName = result.group.name;
-    toast.success(`Grupo "${groupName}" criado com sucesso!`);
-
-    reset();
   }
 
   return (
@@ -87,7 +106,7 @@ export function GroupFormSheet({
           <SheetTitle>Cadastrar novo grupo</SheetTitle>
         </SheetHeader>
         <form
-          onSubmit={handleSubmit(handleCreateNewGroupSubmit)}
+          onSubmit={handleSubmit(handleCreateOrEditGroupSubmit)}
           className="mt-5 space-y-3"
         >
           <div>

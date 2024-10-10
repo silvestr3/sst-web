@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { fetchGroups } from "@/services/fetch-groups";
-import { GroupFormSheet } from "./components/NewGroupSheet";
+import { GroupFormSheet } from "./components/GroupFormSheet";
 
 export default async function GroupsPage() {
   const { groups } = await fetchGroups();
