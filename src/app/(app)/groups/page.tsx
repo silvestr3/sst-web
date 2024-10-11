@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -9,18 +8,28 @@ import {
 } from "@/components/ui/table";
 import { Component, FileDown, Plus, Search } from "lucide-react";
 import { GroupListItem } from "./components/GroupListItem";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { fetchGroups } from "@/services/fetch-groups";
 import { GroupFormSheet } from "./components/GroupFormSheet";
+import { SearchGroupInput } from "./components/SearchGroupInput";
+import { Group } from "@/@types/Group";
+import { searchGroups } from "@/services/search-groups";
 
-export default async function GroupsPage() {
-  const { groups } = await fetchGroups();
+interface GroupsPageProps {
+  searchParams: {
+    q?: string;
+  };
+}
+
+export default async function GroupsPage({ searchParams }: GroupsPageProps) {
+  let groups: Group[];
+
+  if (searchParams.q) {
+    const { groups: groupsList } = await searchGroups({ q: searchParams.q });
+    groups = groupsList;
+  } else {
+    const { groups: groupsList } = await fetchGroups();
+    groups = groupsList;
+  }
 
   return (
     <div className="flex flex-col gap-2">
@@ -51,25 +60,7 @@ export default async function GroupsPage() {
         Agrupe empresas/clientes sob sua gestão com configurações semelhantes
       </span>
 
-      <div className="mt-6 flex items-center gap-1">
-        <Input
-          className="placeholder:text-accent"
-          placeholder="Pesquisar nome do grupo"
-        />
-        <Select>
-          <SelectTrigger className="w-64">
-            <SelectValue placeholder={"Status"} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="ativo">Ativo</SelectItem>
-            <SelectItem value="inativo">Inativo</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button className="flex items-center gap-2">
-          <Search size={18} />
-          Buscar
-        </Button>
-      </div>
+      <SearchGroupInput />
 
       {groups.length > 0 ? (
         <Table className="mt-8">
@@ -88,7 +79,9 @@ export default async function GroupsPage() {
         </Table>
       ) : (
         <h2 className="text-center mt-10 text-lg">
-          Você ainda não cadastrou nenhum grupo
+          {!searchParams.q
+            ? "Você ainda não cadastrou nenhum grupo"
+            : `Sua pesquisa "${searchParams.q}" não retornou nenhum resultado`}
         </h2>
       )}
     </div>
