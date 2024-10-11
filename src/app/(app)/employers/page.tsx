@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { EmployerListItem } from "../groups/[groupId]/components/EmployerListItem";
+import { SearchEmployerInput } from "./components/SearchEmployerInput";
+import { searchEmployers } from "@/services/search-employers";
 
 interface EmployersPageProps {
   searchParams: {
@@ -26,13 +28,21 @@ export default async function EmployersPage({
 }: EmployersPageProps) {
   const { groups } = await fetchGroups();
 
-  const { grupo } = searchParams;
+  const { grupo, q } = searchParams;
 
   let employers: Employer[];
 
   if (grupo) {
-    const { employers: employersList } = await fetchEmployersByGroup(grupo);
-    employers = employersList;
+    if (q) {
+      const { employers: employersList } = await searchEmployers({
+        groupId: grupo,
+        q,
+      });
+      employers = employersList;
+    } else {
+      const { employers: employersList } = await fetchEmployersByGroup(grupo);
+      employers = employersList;
+    }
   } else {
     employers = [];
   }
@@ -68,15 +78,7 @@ export default async function EmployersPage({
       <div className="mt-6 flex items-center gap-1">
         <GroupSelectCombobox groups={groups} />
 
-        <Input
-          className="placeholder:text-accent"
-          placeholder="Pesquisar nome da empresa"
-        />
-
-        <Button type="submit" className="flex items-center gap-2">
-          <Search size={18} />
-          Buscar
-        </Button>
+        <SearchEmployerInput />
       </div>
 
       {employers.length > 0 ? (
